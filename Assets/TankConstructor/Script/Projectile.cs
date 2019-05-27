@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public float force = 800.0f;
+    public ParticleSystem explodeEffect;
+
     Rigidbody2D rigidbody2d;
 
     // Start is called before the first frame update
@@ -18,7 +21,27 @@ public class Projectile : MonoBehaviour
 
     }
 
-    public void Launch(Vector2 direction, float force)
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        ParticleSystem explode = Instantiate(explodeEffect,
+            rigidbody2d.position, Quaternion.identity);
+
+        PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+        if (player != null)
+        {
+            player.ChangeHealth(-1);
+        }
+
+        EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+        if (enemy != null)
+        {
+            enemy.ChangeHealth(-1);
+        }
+
+        Destroy(gameObject);
+    }
+
+    public void Launch(Vector2 direction)
     {
         rigidbody2d.AddForce(direction * force);
     }

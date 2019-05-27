@@ -62,6 +62,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\TankConstructor\Script\CameraController.cs" />
+    <Compile Include="Assets\TankConstructor\Script\EnemyController.cs" />
     <Compile Include="Assets\TankConstructor\Script\PlayerController.cs" />
     <Compile Include="Assets\TankConstructor\Script\Projectile.cs" />
     <Reference Include="Unity.Timeline.Editor">

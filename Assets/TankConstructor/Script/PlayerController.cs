@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float speed = 0.06f;
+    public int maxHealth = 3;
+    public int health { get { return currentHealth; } }
+    public float speed = 3.5f;
     public GameObject track1;
     public GameObject track2;
     public GameObject projectilePrefab;
-    public float launchSpeed = 800.0f;
+    public ParticleSystem brokenParticle;
 
     Rigidbody2D rigidbody2d;
     Animator animator1;
     Animator animator2;
     Vector2 direction = new Vector2(0, 1);
+    int currentHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +24,7 @@ public class PlayerController : MonoBehaviour
         rigidbody2d = GetComponent<Rigidbody2D>();
         animator1 = track1.GetComponent<Animator>();
         animator2 = track2.GetComponent<Animator>();
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
@@ -29,13 +33,21 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Vector2 position = rigidbody2d.position;
+        if (horizontal < 0)
+        {
+            transform.Rotate(0, 0, 1);
+        }else if (horizontal > 0)
+        {
+            transform.Rotate(0, 0, -1);
+        }
+
         float rad = -1.0f * transform.eulerAngles.z * Mathf.Deg2Rad;
         float x = Mathf.Sin(rad);
         float y = Mathf.Cos(rad);
         direction.Set(x, y);
 
-        position += vertical * direction * speed;
+        Vector2 position = rigidbody2d.position;
+        position += vertical * direction * speed * Time.deltaTime;
 
         TrackAnimation(horizontal, vertical);
         rigidbody2d.MovePosition(position);
@@ -58,13 +70,6 @@ public class PlayerController : MonoBehaviour
             animator1.SetBool("Running", true);
             animator2.SetBool("Running", true);
         }
-        if (horizontal < 0)
-        {
-            transform.Rotate(0, 0, 1);
-        }else if (horizontal > 0)
-        {
-            transform.Rotate(0, 0, -1);
-        }
     }
 
     void Launch()
@@ -73,7 +78,20 @@ public class PlayerController : MonoBehaviour
         GameObject projectileObj = Instantiate(projectilePrefab,
                 rigidbody2d.position + offset, transform.rotation);
         Projectile projectile = projectileObj.GetComponent<Projectile>();
-        projectile.Launch(direction, launchSpeed);
+        projectile.Launch(direction);
+    }
+
+    public void ChangeHealth(int amount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
+        if (currentHealth < maxHealth)
+        {
+            brokenParticle.Play();
+        }
+        else
+        {
+            brokenParticle.Stop();
+        }
     }
 }
 
