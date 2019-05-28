@@ -10,7 +10,9 @@ public class PlayerController : MonoBehaviour
     public GameObject track1;
     public GameObject track2;
     public GameObject projectilePrefab;
-    public ParticleSystem brokenParticle;
+    public ParticleSystem brokenParticle1;
+    public ParticleSystem brokenParticle2;
+    public ParticleSystem explodeParticle;
 
     Rigidbody2D rigidbody2d;
     Animator animator1;
@@ -84,13 +86,26 @@ public class PlayerController : MonoBehaviour
     public void ChangeHealth(int amount)
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        if (currentHealth < maxHealth)
+        if (currentHealth == maxHealth - 1)
         {
-            brokenParticle.Play();
+            brokenParticle1.Play();
+            brokenParticle2.Stop();
+        }
+        else if (currentHealth == maxHealth - 2)
+        {
+            brokenParticle2.Play();
+            brokenParticle1.Stop();
+        }
+        else if (currentHealth == 0)
+        {
+            ParticleSystem explode = Instantiate(explodeParticle, 
+                rigidbody2d.position, Quaternion.identity);
+            Destroy(gameObject);
         }
         else
         {
-            brokenParticle.Stop();
+            brokenParticle1.Stop();
+            brokenParticle2.Stop();
         }
     }
 }

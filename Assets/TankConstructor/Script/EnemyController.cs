@@ -4,22 +4,36 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public int maxHealth = 2;
+    public int maxHealth = 3;
     public int health { get { return currentHealth; } }
     public GameObject projectilePrefab;
     public float speed = 3.0f;
-    public ParticleSystem brokenParticle;
+    public ParticleSystem brokenParticle1;
+    public ParticleSystem brokenParticle2;
+    public ParticleSystem explodeParticle;
+    public GameObject track1;
+    public GameObject track2;
 
     Rigidbody2D body;
     float time = 2.0f;
-    Vector2 direction = new Vector2(0, 1);
+    Vector2 direction = new Vector2(0, -1);
+    Animator animator1;
+    Animator animator2;
     int currentHealth;
+    float runningTime;
+    float currentHorizontal;
+    float currentVertical;
 
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        animator1 = track1.GetComponent<Animator>();
+        animator2 = track2.GetComponent<Animator>();
         currentHealth = maxHealth;
+        runningTime = Random.Range(0, 5.0f);
+        currentHorizontal = Random.Range(-1.0f, 1.0f);
+        currentVertical = Random.Range(-1, 2);
     }
 
     // Update is called once per frame
@@ -33,6 +47,56 @@ public class EnemyController : MonoBehaviour
         {
             time = 2.0f;
             Launch();
+        }
+        MovePosition();
+    }
+
+    void MovePosition()
+    {
+        if (runningTime > 0)
+        {
+            runningTime -= Time.deltaTime;
+        }
+        else
+        {
+            runningTime = Random.Range(0, 5.0f);
+
+            currentHorizontal = Random.Range(-1.0f, 1.0f);
+            currentVertical = Random.Range(-1, 2);
+        }
+
+        if (currentHorizontal < -0.6f)
+        {
+            transform.Rotate(0, 0, 1);
+        }
+        else if (currentHorizontal > 0.6f)
+        {
+            transform.Rotate(0, 0, -1);
+        }
+
+        float rad = -1.0f * transform.eulerAngles.z * Mathf.Deg2Rad;
+        float x = Mathf.Sin(rad);
+        float y = Mathf.Cos(rad);
+        direction.Set(x, y);
+
+        Vector2 position = body.position;
+        position += currentVertical * direction * speed * Time.deltaTime;
+
+        TrackAnimation(currentHorizontal, currentVertical);
+        body.MovePosition(position);
+    }
+
+    void TrackAnimation(float horizontal, float vertical)
+    {
+        if ((horizontal > -0.7f && horizontal < 0.7f) && Mathf.Approximately(vertical, 0))
+        {
+            animator1.SetBool("Running", false);
+            animator2.SetBool("Running", false);
+        }
+        else
+        {
+            animator1.SetBool("Running", true);
+            animator2.SetBool("Running", true);
         }
     }
 
@@ -48,13 +112,26 @@ public class EnemyController : MonoBehaviour
     public void ChangeHealth(int amount)
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        if (currentHealth < maxHealth)
+        if (currentHealth == maxHealth - 1)
         {
-            brokenParticle.Play();
+            brokenParticle1.Play();
+            brokenParticle2.Stop();
+        }
+        else if (currentHealth == maxHealth - 2)
+        {
+            brokenParticle2.Play();
+            brokenParticle1.Stop();
+        }
+        else if (currentHealth == 0)
+        {
+            ParticleSystem explode = Instantiate(explodeParticle,
+                body.position, Quaternion.identity);
+            Destroy(gameObject);
         }
         else
         {
-            brokenParticle.Stop();
+            brokenParticle1.Stop();
+            brokenParticle2.Stop();
         }
     }
 }
