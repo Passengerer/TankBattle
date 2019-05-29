@@ -23,17 +23,25 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.gameObject.layer == 8)
+            return;
+
         ParticleSystem explode = Instantiate(explodeEffect,
             rigidbody2d.position, Quaternion.identity);
 
-        PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+        if (collision.gameObject.layer == 11)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        PlayerController player = collision.GetComponent<PlayerController>();
         if (player != null)
         {
             player.ChangeHealth(-1);
         }
 
-        EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
-        if (enemy != null)
+        EnemyController enemy = collision.GetComponent<EnemyController>();
+        if (enemy != null && gameObject.layer != 12)
         {
             enemy.ChangeHealth(-1);
         }

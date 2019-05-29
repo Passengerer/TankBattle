@@ -9,16 +9,24 @@ public class PlayerController : MonoBehaviour
     public float speed = 3.5f;
     public GameObject track1;
     public GameObject track2;
-    public GameObject projectilePrefab;
+    public GameObject tower;
+    //public GameObject projectilePrefab;
     public ParticleSystem brokenParticle1;
     public ParticleSystem brokenParticle2;
     public ParticleSystem explodeParticle;
+    public GameObject plate;
+    public float plateTime = 6.0f;
+    public float launchTime = 1.0f;
 
     Rigidbody2D rigidbody2d;
     Animator animator1;
     Animator animator2;
     Vector2 direction = new Vector2(0, 1);
     int currentHealth;
+    float plateTimer;
+    float launchTimer;
+    TowerController towerCtrl;
+    float rotateSpeed = 55.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +35,9 @@ public class PlayerController : MonoBehaviour
         animator1 = track1.GetComponent<Animator>();
         animator2 = track2.GetComponent<Animator>();
         currentHealth = maxHealth;
+        plateTimer = plateTime;
+        launchTimer = launchTime;
+        towerCtrl = tower.GetComponent<TowerController>();
     }
 
     // Update is called once per frame
@@ -37,10 +48,10 @@ public class PlayerController : MonoBehaviour
 
         if (horizontal < 0)
         {
-            transform.Rotate(0, 0, 1);
+            transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
         }else if (horizontal > 0)
         {
-            transform.Rotate(0, 0, -1);
+            transform.Rotate(0, 0, -rotateSpeed * Time.deltaTime);
         }
 
         float rad = -1.0f * transform.eulerAngles.z * Mathf.Deg2Rad;
@@ -54,9 +65,23 @@ public class PlayerController : MonoBehaviour
         TrackAnimation(horizontal, vertical);
         rigidbody2d.MovePosition(position);
 
-        if (Input.GetKeyDown(KeyCode.J))
+        if (launchTimer > 0)
+        {
+            launchTimer -= Time.deltaTime;
+        }
+        if (launchTimer <=0 && Input.GetKeyDown(KeyCode.J))
         {
             Launch();
+            launchTimer = launchTime;
+        }
+
+        if (plateTimer > 0)
+        {
+            plateTimer -= Time.deltaTime;
+        }
+        else
+        {
+            plate.SetActive(false) ;
         }
     }
 
@@ -76,37 +101,38 @@ public class PlayerController : MonoBehaviour
 
     void Launch()
     {
-        Vector2 offset = new Vector2(1.9f * direction.x, 1.9f * direction.y);
-        GameObject projectileObj = Instantiate(projectilePrefab,
-                rigidbody2d.position + offset, transform.rotation);
-        Projectile projectile = projectileObj.GetComponent<Projectile>();
-        projectile.Launch(direction);
+        towerCtrl.Launch();
     }
 
     public void ChangeHealth(int amount)
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        if (currentHealth == maxHealth - 1)
+        switch(maxHealth - currentHealth)
         {
-            brokenParticle1.Play();
-            brokenParticle2.Stop();
-        }
-        else if (currentHealth == maxHealth - 2)
-        {
-            brokenParticle2.Play();
-            brokenParticle1.Stop();
-        }
-        else if (currentHealth == 0)
-        {
-            ParticleSystem explode = Instantiate(explodeParticle, 
+            case 0:
+                brokenParticle1.Stop();
+                brokenParticle2.Stop();
+                break;
+            case 1:
+                brokenParticle1.Play();
+                brokenParticle2.Stop();
+                break;
+            case 2:
+                brokenParticle2.Play();
+                brokenParticle1.Stop();
+                break;
+            default:
+                ParticleSystem explode = Instantiate(explodeParticle,
                 rigidbody2d.position, Quaternion.identity);
-            Destroy(gameObject);
+                Destroy(gameObject);
+                break;
         }
-        else
-        {
-            brokenParticle1.Stop();
-            brokenParticle2.Stop();
-        }
+    }
+
+    public void SetPlate()
+    {
+        plate.SetActive(true);
+        plateTimer = plateTime;
     }
 }
 

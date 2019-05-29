@@ -62,10 +62,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\TankConstructor\Script\BombController.cs" />
     <Compile Include="Assets\TankConstructor\Script\CameraController.cs" />
     <Compile Include="Assets\TankConstructor\Script\EnemyController.cs" />
+    <Compile Include="Assets\TankConstructor\Script\MineController.cs" />
+    <Compile Include="Assets\TankConstructor\Script\PlateCollectable.cs" />
     <Compile Include="Assets\TankConstructor\Script\PlayerController.cs" />
     <Compile Include="Assets\TankConstructor\Script\Projectile.cs" />
+    <Compile Include="Assets\TankConstructor\Script\TowerController.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>E:/UnityPro/TankBattle/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

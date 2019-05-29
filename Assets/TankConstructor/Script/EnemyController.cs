@@ -23,6 +23,7 @@ public class EnemyController : MonoBehaviour
     float runningTime;
     float currentHorizontal;
     float currentVertical;
+    float rotateSpeed = 55.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -67,11 +68,11 @@ public class EnemyController : MonoBehaviour
 
         if (currentHorizontal < -0.6f)
         {
-            transform.Rotate(0, 0, 1);
+            transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
         }
         else if (currentHorizontal > 0.6f)
         {
-            transform.Rotate(0, 0, -1);
+            transform.Rotate(0, 0, -rotateSpeed * Time.deltaTime);
         }
 
         float rad = -1.0f * transform.eulerAngles.z * Mathf.Deg2Rad;
@@ -88,7 +89,7 @@ public class EnemyController : MonoBehaviour
 
     void TrackAnimation(float horizontal, float vertical)
     {
-        if ((horizontal > -0.7f && horizontal < 0.7f) && Mathf.Approximately(vertical, 0))
+        if ((horizontal > -0.6f && horizontal < 0.6f) && Mathf.Approximately(vertical, 0))
         {
             animator1.SetBool("Running", false);
             animator2.SetBool("Running", false);
@@ -105,6 +106,7 @@ public class EnemyController : MonoBehaviour
         Vector2 offset = new Vector2(1.9f * direction.x, 1.9f * direction.y);
         GameObject projectileObj = Instantiate(projectilePrefab,
                 body.position + offset, transform.rotation);
+        projectileObj.layer = 12;
         Projectile projectile = projectileObj.GetComponent<Projectile>();
         projectile.Launch(direction);
     }
@@ -112,26 +114,25 @@ public class EnemyController : MonoBehaviour
     public void ChangeHealth(int amount)
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
-        if (currentHealth == maxHealth - 1)
+        switch (maxHealth - currentHealth)
         {
-            brokenParticle1.Play();
-            brokenParticle2.Stop();
-        }
-        else if (currentHealth == maxHealth - 2)
-        {
-            brokenParticle2.Play();
-            brokenParticle1.Stop();
-        }
-        else if (currentHealth == 0)
-        {
-            ParticleSystem explode = Instantiate(explodeParticle,
+            case 0:
+                brokenParticle1.Stop();
+                brokenParticle2.Stop();
+                break;
+            case 1:
+                brokenParticle1.Play();
+                brokenParticle2.Stop();
+                break;
+            case 2:
+                brokenParticle2.Play();
+                brokenParticle1.Stop();
+                break;
+            default:
+                ParticleSystem explode = Instantiate(explodeParticle,
                 body.position, Quaternion.identity);
-            Destroy(gameObject);
-        }
-        else
-        {
-            brokenParticle1.Stop();
-            brokenParticle2.Stop();
+                Destroy(gameObject);
+                break;
         }
     }
 }
