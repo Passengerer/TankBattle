@@ -32,8 +32,8 @@ public class MineController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!triggered && (collision.gameObject.layer == 9 || 
-            collision.gameObject.layer == 10))
+        if (!triggered && (collision.gameObject.layer == LayerMask.NameToLayer("Players") || 
+            collision.gameObject.layer == LayerMask.NameToLayer("Enemy")))
         {
             animator.SetBool("Trigger", true);
             timer = delayTime;
@@ -47,11 +47,11 @@ public class MineController : MonoBehaviour
             transform.position, explodeRadius);
         for (int i = 0; i < others.Length; ++i)
         {
-            if (others[i].gameObject.layer == 9)
+            if (others[i].gameObject.layer == LayerMask.NameToLayer("Players"))
             {
                 others[i].GetComponent<PlayerController>().ChangeHealth(damage);
             }
-            else if(others[i].gameObject.layer == 10)
+            else if(others[i].gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 others[i].GetComponent<EnemyController>().ChangeHealth(damage);
             }

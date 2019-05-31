@@ -23,13 +23,13 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == 8)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
             return;
 
         ParticleSystem explode = Instantiate(explodeEffect,
             rigidbody2d.position, Quaternion.identity);
 
-        if (collision.gameObject.layer == 11)
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Plate"))
         {
             Destroy(gameObject);
             return;
@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour
         }
 
         EnemyController enemy = collision.GetComponent<EnemyController>();
-        if (enemy != null && gameObject.layer != 12)
+        if (enemy != null && gameObject.layer != LayerMask.NameToLayer("EnemyProjectile"))
         {
             enemy.ChangeHealth(-1);
         }

@@ -42,5 +42,13 @@ public class TowerController : MonoBehaviour
                 transform.position + offset, transform.rotation);
         Projectile projectile = projectileObj.GetComponent<Projectile>();
         projectile.Launch(direction);
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position + offset, direction);
+        if (hit.collider != null && 
+            hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            hit.collider.GetComponent<EnemyController>().IsAttacked(hit.point);
+        }
     }
 }

@@ -3,7 +3,14 @@ guid: cb9f37a423c90384987f23a530157f5b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - projectilePrefab: {instanceID: 0}
+  - brokenParticle1: {instanceID: 0}
+  - brokenParticle2: {instanceID: 0}
+  - explodeParticle: {instanceID: 0}
+  - track1: {instanceID: 0}
+  - track2: {instanceID: 0}
+  - target: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

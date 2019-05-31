@@ -1,8 +1,10 @@
 ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
+    - BombController
     - CameraController
     - EnemyController
+    - MineController
     - PlateCollectable
     - PlayerController
     - Projectile
@@ -33,6 +35,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 50
       Script: {instanceID: 0}
+    - Class: 58
+      Script: {instanceID: 0}
     - Class: 61
       Script: {instanceID: 0}
     - Class: 66
@@ -58,13 +62,17 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9580}
     - Class: 114
-      Script: {instanceID: 9736}
+      Script: {instanceID: 9712}
     - Class: 114
-      Script: {instanceID: 10024}
+      Script: {instanceID: 9738}
     - Class: 114
-      Script: {instanceID: 10130}
+      Script: {instanceID: 10026}
     - Class: 114
-      Script: {instanceID: 10574}
+      Script: {instanceID: 10132}
+    - Class: 114
+      Script: {instanceID: 10264}
+    - Class: 114
+      Script: {instanceID: 10578}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -550,6 +558,12 @@ ScriptsOnlyBuild:
     className: AnimationPlayableAsset
   - hash:
       serializedVersion: 2
+      Hash: 6b607cccd092bf2a404e6b42c4834c63
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: MineController
+  - hash:
+      serializedVersion: 2
       Hash: 7918f79c1f03ccc0c138fe949c194a71
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
@@ -698,6 +712,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TextMeshProUGUI
+  - hash:
+      serializedVersion: 2
+      Hash: 6775e0aa1585f79efbb589ab5ab7d74e
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: BombController
   - hash:
       serializedVersion: 2
       Hash: 516824a435828eadd660ef2f1658a48e

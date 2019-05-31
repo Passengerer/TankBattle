@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\TankConstructor\Script\BasicTank.cs" />
     <Compile Include="Assets\TankConstructor\Script\BombController.cs" />
     <Compile Include="Assets\TankConstructor\Script\CameraController.cs" />
     <Compile Include="Assets\TankConstructor\Script\EnemyController.cs" />
