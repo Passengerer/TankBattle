@@ -5,50 +5,66 @@ using UnityEngine;
 public class TowerController : MonoBehaviour
 {
     public GameObject projectilePrefab;
+    public float offset = 1.9f;
+    public float rotateSpeed = 55.0f;
+    public Vector2 towerDirection { get { return direction; } }
 
-    Vector2 direction;
-    float rotateSpeed = 55.0f;
+    Vector2 direction = new Vector2(1, 0);
 
-    void Start()
+    public void RotateTower(float gunRotate, bool limit)
     {
-        direction = new Vector2(1, 0);
-    }
-
-    void Update()
-    {
-        float gunRotate = Input.GetAxis("GunRotate");
-
-        if (gunRotate < 0 && (transform.localEulerAngles.z < 60.0f || 
-            transform.localEulerAngles.z > 295.0f))
+        if (limit)
         {
-            transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
+            if (gunRotate < 0 && (transform.localEulerAngles.z < 60.0f ||
+                    transform.localEulerAngles.z > 295.0f))
+            {
+                transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
+            }
+            else if (gunRotate > 0 && (transform.localEulerAngles.z < 65.0f ||
+                transform.localEulerAngles.z > 300.0f))
+            {
+                transform.Rotate(0, 0, -rotateSpeed * Time.deltaTime);
+            }
         }
-        else if (gunRotate > 0 && (transform.localEulerAngles.z < 65.0f ||
-            transform.localEulerAngles.z > 300.0f))
+        else
         {
-            transform.Rotate(0, 0, -rotateSpeed * Time.deltaTime);
+            if (gunRotate < 0)
+            {
+                transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
+            }
+            else if (gunRotate > 0)
+            {
+                transform.Rotate(0, 0, -rotateSpeed * Time.deltaTime);
+            }
         }
 
         float rad = -1.0f * transform.eulerAngles.z * Mathf.Deg2Rad;
         float x = Mathf.Sin(rad);
         float y = Mathf.Cos(rad);
         direction.Set(x, y);
+        direction.Normalize();
     }
 
-    public void Launch()
+    public void Launch(string launcher)
     {
-        Vector3 offset = new Vector3(1.9f * direction.x, 1.9f * direction.y, 0);
+        Vector3 off = new Vector3(offset * direction.x, offset * direction.y, 0);
         GameObject projectileObj = Instantiate(projectilePrefab,
-                transform.position + offset, transform.rotation);
+                transform.position + off, transform.rotation);
         Projectile projectile = projectileObj.GetComponent<Projectile>();
         projectile.Launch(direction);
 
-        RaycastHit2D hit = Physics2D.Raycast(
-            transform.position + offset, direction);
-        if (hit.collider != null && 
-            hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (launcher == "player")
         {
-            hit.collider.GetComponent<EnemyController>().IsAttacked(hit.point);
+            RaycastHit2D hit = Physics2D.Raycast(
+                transform.position + off, direction);
+            if (hit.collider != null &&
+                hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                hit.collider.GetComponent<EnemyController>().IsAttacked(hit.point);
+            }
+        }else if (launcher == "enemy")
+        {
+            projectileObj.layer = LayerMask.NameToLayer("EnemyProjectile");
         }
     }
 }

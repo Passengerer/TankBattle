@@ -32,21 +32,23 @@ public class Projectile : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Plate"))
         {
             Destroy(gameObject);
-            return;
         }
-        PlayerController player = collision.GetComponent<PlayerController>();
-        if (player != null)
+        else
         {
-            player.ChangeHealth(-1);
-        }
+            PlayerController player = collision.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.ChangeHealth(-1);
+            }
 
-        EnemyController enemy = collision.GetComponent<EnemyController>();
-        if (enemy != null && gameObject.layer != LayerMask.NameToLayer("EnemyProjectile"))
-        {
-            enemy.ChangeHealth(-1);
-        }
+            EnemyController enemy = collision.GetComponent<EnemyController>();
+            if (enemy != null && gameObject.layer != LayerMask.NameToLayer("EnemyProjectile"))
+            {
+                enemy.ChangeHealth(-1);
+            }
 
-        Destroy(gameObject);
+            Destroy(gameObject);
+        }
     }
 
     public void Launch(Vector2 direction)

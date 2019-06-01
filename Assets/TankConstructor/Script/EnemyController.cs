@@ -4,27 +4,29 @@ using UnityEngine;
 
 public class EnemyController : BasicTank
 {
-    public GameObject projectilePrefab;
-    public float speed = 3.0f;
     public float launchTime = 1.5f;
-    public GameObject track1;
-    public GameObject track2;
     public float warningTime = 0.95f;
     public GameObject target;
     public float distance = 15.0f;
+    public float accuracy = 20;
+    public float eludeRate = 0.8f;
     
-    float time = 2.0f;
-    Vector2 direction = new Vector2(0, -1);
-    float runningTime;
+    float launchTimer = 2.0f;
+    float runningTime = 4.5f;
+    float runningTimer;
+    float towerTimer;
+    float towerRotateRate = 0.5f;
+    float towerRotateDirection = 0;
     float currentHorizontal;
     float currentVertical;
-    float rotateSpeed = 55.0f;
     bool attacked = false;
     float warningTimer;
     bool seen = false;
     bool elude = false;
-    float eludeRate = 0.8f;
     Vector2 attackedPoint;
+    bool aiming = false;
+    float aimingTimer = 0.5f;
+    float randomAim = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -34,26 +36,37 @@ public class EnemyController : BasicTank
         animator1 = track1.GetComponent<Animator>();
         animator2 = track2.GetComponent<Animator>();
         currentHealth = maxHealth;
-        runningTime = Random.Range(0, 5.0f);
+        runningTimer = Random.Range(0, runningTime);
+        towerTimer = Random.Range(0, 2.0f);
         currentHorizontal = Random.Range(-1.0f, 1.0f);
         currentVertical = Random.Range(-1, 2);
+        towerCtrl = tower.GetComponent<TowerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (time > 0)
+        if (towerTimer > 0)
         {
-            time -= Time.deltaTime;
+            towerTimer -= Time.deltaTime;
+        }
+        if (runningTimer > 0)
+        {
+            runningTimer -= Time.deltaTime;
+        }
+        if (launchTimer > 0)
+        {
+            launchTimer -= Time.deltaTime;
+        }
+        else if (launchTimer <= 0 && !aiming)
+        {
+            launchTimer = Random.Range(launchTime, 6.0f);
+            Launch();
         }
         else
         {
-            time = Random.Range(launchTime, 6.0f);
+            launchTimer = Random.Range(launchTime, 2.5f);
             Launch();
-        }
-        if (runningTime > 0)
-        {
-            runningTime -= Time.deltaTime;
         }
         if (warningTimer > 0)
         {
@@ -87,16 +100,16 @@ public class EnemyController : BasicTank
         if (!attacked)
         {
             //空闲状态，划水
-            if (runningTime <= 0)
+            if (runningTimer <= 0)
             {
-                runningTime = Random.Range(0, 3.0f);
+                runningTimer = Random.Range(0, runningTime);
 
                 currentHorizontal = Random.Range(-1.0f, 1.0f);
                 if (Mathf.Abs(currentHorizontal) > 0.5f)
                     currentHorizontal = 0;
                 currentVertical = Random.Range(-1, 2);
             }
-            MovePosition();
+            MovePosition(currentHorizontal, currentVertical);
         }
         else
         {
@@ -121,7 +134,7 @@ public class EnemyController : BasicTank
                     RaycastHit2D hit = Physics2D.Raycast(rigidbody2d.position,
                         direction * currentVertical, 3, LayerMask.GetMask("Wall"));
                     //如果夹角太小，直走不能躲避，必须转弯
-                    if (angle < 30.0f || hit.collider != null)
+                    if (angle < 30.0f || angle > 150.0f || hit.collider != null)
                     {
                         currentHorizontal = Random.Range(0, 2) == 0 ? 1 : -1;
                     }
@@ -133,42 +146,52 @@ public class EnemyController : BasicTank
                     }
                 }
             }
-            MovePosition();
+            MovePosition(currentHorizontal, currentVertical);
         }
-    }
-
-    void MovePosition()
-    {
-        
-        if (currentHorizontal < 0)
+        if (!seen)
         {
-            transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
+            if (towerTimer > 0)
+                towerCtrl.RotateTower(towerRotateDirection, false);
+            else
+            {
+                towerTimer = Random.Range(0, 2.0f);
+                towerRotateDirection = Random.Range(-1.0f, 1.0f);
+                if (Mathf.Abs(towerRotateDirection) < towerRotateRate)
+                    towerRotateDirection = 0;
+            }
         }
-        else if (currentHorizontal > 0)
+        else if (seen && target != null)
         {
-            transform.Rotate(0, 0, -rotateSpeed * Time.deltaTime);
+            Vector2 targetDirection = target.transform.position - towerCtrl.transform.position;
+            float angle = Vector2.SignedAngle(targetDirection, towerCtrl.towerDirection);
+            if (aimingTimer > 0)
+            {
+                aimingTimer -= Time.deltaTime;
+            }
+            else
+            {
+                aimingTimer = Random.Range(0, 1.0f);
+                randomAim = Random.Range(-accuracy, accuracy);
+            }
+            if (angle < randomAim + 3.0f && angle > randomAim - 3.0f)
+            {
+                aiming = true;
+                towerRotateDirection = 0;
+            }
+            else
+            {
+                aiming = false;
+                towerRotateDirection = randomAim - angle < 0 ? 1 : -1;
+            }
+            towerCtrl.RotateTower(towerRotateDirection, false);
         }
-
-        float rad = -1.0f * transform.eulerAngles.z * Mathf.Deg2Rad;
-        float x = Mathf.Sin(rad);
-        float y = Mathf.Cos(rad);
-        direction.Set(x, y);
-
-        Vector2 position = rigidbody2d.position;
-        position += currentVertical * direction * speed * Time.deltaTime;
-
-        TrackAnimation(currentHorizontal, currentVertical);
-        rigidbody2d.MovePosition(position);
+        if (target == null)
+            seen = false;
     }
 
     void Launch()
     {
-        Vector2 offset = new Vector2(1.9f * direction.x, 1.9f * direction.y);
-        GameObject projectileObj = Instantiate(projectilePrefab,
-                rigidbody2d.position + offset, transform.rotation);
-        projectileObj.layer = 12;
-        Projectile projectile = projectileObj.GetComponent<Projectile>();
-        projectile.Launch(direction);
+        towerCtrl.Launch("enemy");
     }
 
     public void IsAttacked(Vector2 location)

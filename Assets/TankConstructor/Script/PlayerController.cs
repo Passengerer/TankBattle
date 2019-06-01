@@ -4,19 +4,12 @@ using UnityEngine;
 
 public class PlayerController : BasicTank
 {
-    public float speed = 3.5f;
-    public GameObject track1;
-    public GameObject track2;
-    public GameObject tower;
     public GameObject plate;
-    public float plateTime = 6.0f;
+    public float plateTime = 10.0f;
     public float launchTime = 1.0f;
     
-    Vector2 direction = new Vector2(0, 1);
     float plateTimer;
     float launchTimer;
-    TowerController towerCtrl;
-    float rotateSpeed = 55.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +19,7 @@ public class PlayerController : BasicTank
         animator1 = track1.GetComponent<Animator>();
         animator2 = track2.GetComponent<Animator>();
         currentHealth = maxHealth;
-        plateTimer = plateTime;
+        SetPlate();
         launchTimer = launchTime;
         towerCtrl = tower.GetComponent<TowerController>();
     }
@@ -36,25 +29,10 @@ public class PlayerController : BasicTank
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
+        float gunRotate = Input.GetAxis("GunRotate");
 
-        if (horizontal < 0)
-        {
-            transform.Rotate(0, 0, rotateSpeed * Time.deltaTime);
-        }else if (horizontal > 0)
-        {
-            transform.Rotate(0, 0, -rotateSpeed * Time.deltaTime);
-        }
-
-        float rad = -1.0f * transform.eulerAngles.z * Mathf.Deg2Rad;
-        float x = Mathf.Sin(rad);
-        float y = Mathf.Cos(rad);
-        direction.Set(x, y);
-
-        Vector2 position = rigidbody2d.position;
-        position += vertical * direction * speed * Time.deltaTime;
-
-        TrackAnimation(horizontal, vertical);
-        rigidbody2d.MovePosition(position);
+        MovePosition(horizontal, vertical);
+        towerCtrl.RotateTower(gunRotate, true);
 
         if (launchTimer > 0)
         {
@@ -78,7 +56,7 @@ public class PlayerController : BasicTank
 
     void Launch()
     {
-        towerCtrl.Launch();
+        towerCtrl.Launch("player");
     }
 
     public void SetPlate()
