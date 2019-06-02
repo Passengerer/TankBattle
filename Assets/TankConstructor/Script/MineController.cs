@@ -36,6 +36,7 @@ public class MineController : MonoBehaviour
             collision.gameObject.layer == LayerMask.NameToLayer("Enemy")))
         {
             animator.SetBool("Trigger", true);
+            GetComponent<AudioSource>().Play();
             timer = delayTime;
             triggered = true;
         }

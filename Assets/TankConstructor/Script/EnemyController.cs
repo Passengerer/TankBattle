@@ -191,7 +191,7 @@ public class EnemyController : BasicTank
 
     void Launch()
     {
-        towerCtrl.Launch("enemy");
+        towerCtrl.Launch("Enemy");
     }
 
     public void IsAttacked(Vector2 location)

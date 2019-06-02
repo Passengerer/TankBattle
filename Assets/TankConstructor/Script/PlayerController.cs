@@ -56,7 +56,7 @@ public class PlayerController : BasicTank
 
     void Launch()
     {
-        towerCtrl.Launch("player");
+        towerCtrl.Launch("Player");
     }
 
     public void SetPlate()

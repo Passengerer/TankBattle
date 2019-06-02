@@ -5,11 +5,16 @@ using UnityEngine;
 public class TowerController : MonoBehaviour
 {
     public GameObject projectilePrefab;
-    public float offset = 1.9f;
     public float rotateSpeed = 55.0f;
     public Vector2 towerDirection { get { return direction; } }
 
     Vector2 direction = new Vector2(1, 0);
+    float offset;
+
+    private void Start()
+    {
+        offset = projectilePrefab.GetComponent<Projectile>().offset;
+    }
 
     public void RotateTower(float gunRotate, bool limit)
     {
@@ -48,12 +53,7 @@ public class TowerController : MonoBehaviour
     public void Launch(string launcher)
     {
         Vector3 off = new Vector3(offset * direction.x, offset * direction.y, 0);
-        GameObject projectileObj = Instantiate(projectilePrefab,
-                transform.position + off, transform.rotation);
-        Projectile projectile = projectileObj.GetComponent<Projectile>();
-        projectile.Launch(direction);
-
-        if (launcher == "player")
+        if (launcher == "Player")
         {
             RaycastHit2D hit = Physics2D.Raycast(
                 transform.position + off, direction);
@@ -62,9 +62,13 @@ public class TowerController : MonoBehaviour
             {
                 hit.collider.GetComponent<EnemyController>().IsAttacked(hit.point);
             }
-        }else if (launcher == "enemy")
-        {
-            projectileObj.layer = LayerMask.NameToLayer("EnemyProjectile");
         }
+
+        GameObject projectileObj = Instantiate(projectilePrefab,
+                transform.position + off, transform.rotation);
+        Projectile projectile = projectileObj.GetComponent<Projectile>();
+        projectile.Launch(direction);
+
+        projectileObj.gameObject.layer = LayerMask.NameToLayer(launcher + "Projectile");
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public float offset = 1.9f;
     public float force = 800.0f;
     public ParticleSystem explodeEffect;
 
@@ -13,12 +14,6 @@ public class Projectile : MonoBehaviour
     void Awake()
     {
         rigidbody2d = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -36,7 +31,7 @@ public class Projectile : MonoBehaviour
         else
         {
             PlayerController player = collision.GetComponent<PlayerController>();
-            if (player != null)
+            if (player != null && gameObject.layer != LayerMask.NameToLayer("PlayerProjectile"))
             {
                 player.ChangeHealth(-1);
             }
