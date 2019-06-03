@@ -64,7 +64,6 @@
   <ItemGroup>
     <Compile Include="Assets\TankConstructor\Script\BasicTank.cs" />
     <Compile Include="Assets\TankConstructor\Script\BombController.cs" />
-    <Compile Include="Assets\TankConstructor\Script\CameraController.cs" />
     <Compile Include="Assets\TankConstructor\Script\EnemyController.cs" />
     <Compile Include="Assets\TankConstructor\Script\MineController.cs" />
     <Compile Include="Assets\TankConstructor\Script\PlateCollectable.cs" />
@@ -91,6 +90,12 @@
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>E:/UnityPro/TankBattle/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>E:/UnityPro/TankBattle/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>E:/UnityPro/TankBattle/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.1.1f1/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

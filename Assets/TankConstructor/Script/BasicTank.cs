@@ -14,6 +14,7 @@ public class BasicTank : MonoBehaviour
     public ParticleSystem brokenParticle1;
     public ParticleSystem brokenParticle2;
     public ParticleSystem explodeParticle;
+    public GameObject AudioListenerObj; //玩家被击败，留下监听器
 
     protected Vector2 direction = new Vector2(0, 1);
     protected Rigidbody2D rigidbody2d;
@@ -42,6 +43,8 @@ public class BasicTank : MonoBehaviour
             default:
                 ParticleSystem explode = Instantiate(explodeParticle,
                 rigidbody2d.position, Quaternion.identity);
+                if (this.gameObject.layer == LayerMask.NameToLayer("Players"))
+                    Instantiate(AudioListenerObj, this.transform.position, Quaternion.identity);
                 Destroy(gameObject);
                 break;
         }

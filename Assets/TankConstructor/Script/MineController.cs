@@ -32,8 +32,7 @@ public class MineController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!triggered && (collision.gameObject.layer == LayerMask.NameToLayer("Players") || 
-            collision.gameObject.layer == LayerMask.NameToLayer("Enemy")))
+        if (!triggered)
         {
             animator.SetBool("Trigger", true);
             GetComponent<AudioSource>().Play();

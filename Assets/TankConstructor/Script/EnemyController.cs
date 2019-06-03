@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController : BasicTank
 {
     public float launchTime = 1.5f;
+    public float maxLaunchTime = 2.5f;
     public float warningTime = 0.95f;
     public GameObject target;
     public float distance = 15.0f;
@@ -63,9 +64,9 @@ public class EnemyController : BasicTank
             launchTimer = Random.Range(launchTime, 6.0f);
             Launch();
         }
-        else
+        else if (launchTimer <= 0 && aiming)
         {
-            launchTimer = Random.Range(launchTime, 2.5f);
+            launchTimer = Random.Range(launchTime, maxLaunchTime);
             Launch();
         }
         if (warningTimer > 0)
