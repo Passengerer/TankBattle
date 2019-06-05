@@ -74,6 +74,7 @@
     <Compile Include="Assets\TankConstructor\Script\SingleGunTower.cs" />
     <Compile Include="Assets\TankConstructor\Script\StaticProjectile.cs" />
     <Compile Include="Assets\TankConstructor\Script\TowerController.cs" />
+    <Compile Include="Assets\TankConstructor\UI\GameOverScene.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>E:/UnityPro/TankBattle/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
