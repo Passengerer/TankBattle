@@ -8,10 +8,12 @@ public class PlayerController : BasicTank
     public GameObject AudioListenerObject;  //子物体对象，保持监听器不旋转
     public float plateTime = 10.0f;
     public float launchTime = 1.0f;
+    public bool movable = true;
     
     float plateTimer;
     float launchTimer;
     AudioSource audioSource;
+    float staticTime = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +32,18 @@ public class PlayerController : BasicTank
     // Update is called once per frame
     void Update()
     {
+        if (!movable)
+        {
+            if (staticTime > 0)
+            {
+                staticTime -= Time.deltaTime;
+                return;
+            }
+            else SetMovable(true, -1);
+        }
+
         AudioListenerObject.transform.eulerAngles = new Vector3(0, 0, 0);
+
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         float gunRotate = Input.GetAxis("GunRotate");
@@ -56,6 +69,12 @@ public class PlayerController : BasicTank
         {
             plate.SetActive(false) ;
         }
+    }
+
+    public void SetMovable(bool movable, float time)
+    {
+        this.movable = movable;
+        staticTime = time;
     }
 
     void Launch()

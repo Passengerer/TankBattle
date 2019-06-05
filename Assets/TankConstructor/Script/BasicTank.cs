@@ -43,7 +43,7 @@ public class BasicTank : MonoBehaviour
             default:
                 ParticleSystem explode = Instantiate(explodeParticle,
                 rigidbody2d.position, Quaternion.identity);
-                if (this.gameObject.layer == LayerMask.NameToLayer("Players"))
+                if (GetType() == typeof(PlayerController))
                     Instantiate(AudioListenerObj, this.transform.position, Quaternion.identity);
                 Destroy(gameObject);
                 break;

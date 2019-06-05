@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    public float offset = 1.9f;
     public float force = 800.0f;
     public ParticleSystem explodeEffect;
 
-    Rigidbody2D rigidbody2d;
+    protected Rigidbody2D rigidbody2d;
 
     // Start is called before the first frame update
     void Awake()
