@@ -14,6 +14,8 @@ public class PlayerController : BasicTank
     float launchTimer;
     AudioSource audioSource;
     float staticTime = 0;
+    float fixTime = 5.0f;
+    float fixTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,20 @@ public class PlayerController : BasicTank
         towerCtrl = tower.GetComponent<TowerController>();
         audioSource = GetComponent<AudioSource>();
         SetPlate();
+        fixTimer = fixTime;
+    }
+
+    void Fix()
+    {
+        if (fixTimer > 0)
+        {
+            fixTimer -= Time.deltaTime;
+        }
+        else
+        {
+            ChangeHealth(1);
+            fixTimer = fixTime;
+        }
     }
 
     // Update is called once per frame
@@ -69,6 +85,8 @@ public class PlayerController : BasicTank
         {
             plate.SetActive(false) ;
         }
+        if (plate.activeInHierarchy)
+            Fix();
     }
 
     public void SetMovable(bool movable, float time)
@@ -87,6 +105,7 @@ public class PlayerController : BasicTank
         audioSource.Play();
         plate.SetActive(true);
         plateTimer = plateTime;
+        fixTimer = fixTime;
     }
 }
 

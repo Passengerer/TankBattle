@@ -8,12 +8,14 @@ public class BombController : MonoBehaviour
     public int damage = -2;
     public float explodeRadius = 2.5f;
 
+    bool trigger = false;
+
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Projectile projectile = collision.GetComponent<Projectile>();
-
-        if (projectile != null)
+        if (!trigger)
         {
+            trigger = true;
+
             Instantiate(explode, transform.position, Quaternion.identity);
             Bomb();
             Destroy(gameObject);

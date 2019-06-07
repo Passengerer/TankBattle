@@ -12,6 +12,7 @@ ScriptsOnlyBuild:
     - SceneController
     - SingleGunTower
     - StaticProjectile
+    - YouWinScene
     Cinemachine.dll:
     - Cinemachine.CinemachineBrain
     - Cinemachine.CinemachineConfiner
@@ -21,10 +22,8 @@ ScriptsOnlyBuild:
     UnityEditor.Graphs.dll:
     - UnityEditor.Graphs.AnimationBlendTree.Graph
     - UnityEditor.Graphs.AnimationBlendTree.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.AnyStateNode
     - UnityEditor.Graphs.AnimationStateMachine.Graph
     - UnityEditor.Graphs.AnimationStateMachine.GraphGUI
-    - UnityEditor.Graphs.AnimationStateMachine.StateNode
     - UnityEditor.Graphs.AnimatorControllerTool
     UnityEditor.TestRunner.dll:
     - UnityEditor.TestTools.TestRunner.TestListCacheData
@@ -55,21 +54,21 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 9392}
-    - Class: 114
       Script: {instanceID: 9394}
     - Class: 114
-      Script: {instanceID: 9400}
+      Script: {instanceID: 9396}
     - Class: 114
-      Script: {instanceID: 9406}
+      Script: {instanceID: 9402}
     - Class: 114
-      Script: {instanceID: 9414}
+      Script: {instanceID: 9408}
     - Class: 114
-      Script: {instanceID: 9450}
+      Script: {instanceID: 9416}
     - Class: 114
       Script: {instanceID: 9452}
     - Class: 114
-      Script: {instanceID: 37494}
+      Script: {instanceID: 9454}
+    - Class: 114
+      Script: {instanceID: 9980}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -128,35 +127,35 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 644}
     - Class: 114
-      Script: {instanceID: 9312}
+      Script: {instanceID: 9314}
     - Class: 114
-      Script: {instanceID: 9468}
+      Script: {instanceID: 9470}
     - Class: 114
-      Script: {instanceID: 9772}
+      Script: {instanceID: 9774}
     - Class: 114
-      Script: {instanceID: 9806}
+      Script: {instanceID: 9808}
     - Class: 114
-      Script: {instanceID: 9836}
+      Script: {instanceID: 9838}
     - Class: 114
-      Script: {instanceID: 9876}
+      Script: {instanceID: 9878}
     - Class: 114
-      Script: {instanceID: 10022}
+      Script: {instanceID: 10026}
     - Class: 114
-      Script: {instanceID: 10072}
+      Script: {instanceID: 10076}
     - Class: 114
-      Script: {instanceID: 10078}
+      Script: {instanceID: 10082}
     - Class: 114
-      Script: {instanceID: 10312}
+      Script: {instanceID: 10316}
     - Class: 114
-      Script: {instanceID: 10336}
+      Script: {instanceID: 10340}
     - Class: 114
-      Script: {instanceID: 10374}
+      Script: {instanceID: 10378}
     - Class: 114
-      Script: {instanceID: 10508}
+      Script: {instanceID: 10512}
     - Class: 114
-      Script: {instanceID: 10848}
+      Script: {instanceID: 10852}
     - Class: 114
-      Script: {instanceID: 10866}
+      Script: {instanceID: 10870}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 157
@@ -176,6 +175,55 @@ ScriptsOnlyBuild:
     - Class: 483693784
       Script: {instanceID: 0}
     - Class: 1839735485
+      Script: {instanceID: 0}
+    Assets/TankConstructor/YouWin.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 9310}
+    - Class: 114
+      Script: {instanceID: 9394}
+    - Class: 114
+      Script: {instanceID: 9396}
+    - Class: 114
+      Script: {instanceID: 9402}
+    - Class: 114
+      Script: {instanceID: 9408}
+    - Class: 114
+      Script: {instanceID: 9416}
+    - Class: 114
+      Script: {instanceID: 9452}
+    - Class: 114
+      Script: {instanceID: 9454}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -220,6 +268,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_ScrollbarEventHandler
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: YouWinScene
   - hash:
       serializedVersion: 2
       Hash: 049c6c1d489a8d6439fa68217ef864d5
@@ -780,6 +834,12 @@ ScriptsOnlyBuild:
     className: CinemachineTriggerAction
   - hash:
       serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: GameOverScene
+  - hash:
+      serializedVersion: 2
       Hash: c3d3430df9e3ea95e3e3d587961390fb
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
@@ -1108,14 +1168,9 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: GameOverScene
   platform: 19
   scenePathNames:
   - Assets/TankConstructor/Main.unity
   - Assets/TankConstructor/GameOver.unity
+  - Assets/TankConstructor/YouWin.unity
   playerPath: E:/UnityPro/TankBattle/Build/TankBattle.exe

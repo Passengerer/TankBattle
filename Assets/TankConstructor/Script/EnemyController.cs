@@ -84,7 +84,8 @@ public class EnemyController : BasicTank
 
     void CheckDistance()
     {
-        if (Vector2.Distance(target.transform.position, transform.position) < distance)
+        float dis = Vector2.Distance(target.transform.position, transform.position);
+        if (dis < distance)
         {
             RaycastHit2D hit = Physics2D.Linecast(
                 transform.position, target.transform.position, LayerMask.GetMask("Wall"));

@@ -1,9 +1,9 @@
 fileFormatVersion: 2
 guid: d54dd0dff73f8d143ad4456394686d5c
 TextureImporter:
-  fileIDToRecycleName: {}
+  internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -131,11 +131,13 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: b6607c3cb5bb24e4bb695b11827b979b
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-  spritePackingTag: 
+    secondaryTextures: []
+  spritePackingTag: hulls
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

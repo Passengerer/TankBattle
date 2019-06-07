@@ -1,9 +1,9 @@
 fileFormatVersion: 2
 guid: b3d5a576150683f42a18c0ceb3d0203f
 TextureImporter:
-  fileIDToRecycleName: {}
+  internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 7
+  serializedVersion: 10
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -131,11 +131,13 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 7488b55e02d643448a0ef37081903c50
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
-  spritePackingTag: 
+    secondaryTextures: []
+  spritePackingTag: guns
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 

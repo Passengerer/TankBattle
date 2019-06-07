@@ -80,7 +80,6 @@ public class BasicTank : MonoBehaviour
         float x = Mathf.Sin(rad);
         float y = Mathf.Cos(rad);
         direction.Set(x, y);
-        direction.Normalize();
 
         Vector2 position = rigidbody2d.position;
         position += vertical * direction * speed * Time.deltaTime;

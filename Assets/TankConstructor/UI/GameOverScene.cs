@@ -5,9 +5,6 @@ using UnityEngine.UI;
 
 public class GameOverScene : MonoBehaviour
 {
-    //public GameObject playAgainButton;
-    //public GameObject quitGameButton;
-
     // Start is called before the first frame update
     void Start()
     {

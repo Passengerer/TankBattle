@@ -17,5 +17,13 @@ public class SceneController : MonoBehaviour
                 timer -= Time.deltaTime;
             else UnityEngine.SceneManagement.SceneManager.LoadScene(1);
         }
+
+        Object[] enemys = GameObject.FindObjectsOfType(typeof(EnemyController));
+        if (enemys.Length == 0)
+        {
+            if (timer > 0)
+                timer -= Time.deltaTime;
+            else UnityEngine.SceneManagement.SceneManager.LoadScene(2);
+        }
     }
 }
