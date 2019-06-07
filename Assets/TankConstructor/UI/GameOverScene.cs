@@ -15,15 +15,18 @@ public class GameOverScene : MonoBehaviour
         
         play.onClick.AddListener(onPlayClick);
         quit.onClick.AddListener(onQuitClick);
+        Debug.Log("gameover scene");
     }
 
     void onPlayClick()
     {
+        Debug.Log("onPlayClick");
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     void onQuitClick()
     {
+        Debug.Log("onQuitClick");
         Application.Quit();
     }
 }

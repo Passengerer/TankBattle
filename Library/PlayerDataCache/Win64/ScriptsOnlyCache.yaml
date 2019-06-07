@@ -9,10 +9,10 @@ ScriptsOnlyBuild:
     - PlateCollectable
     - PlayerController
     - Projectile
+    - QuitGame
     - SceneController
     - SingleGunTower
     - StaticProjectile
-    - YouWinScene
     Cinemachine.dll:
     - Cinemachine.CinemachineBrain
     - Cinemachine.CinemachineConfiner
@@ -50,8 +50,6 @@ ScriptsOnlyBuild:
     - Class: 48
       Script: {instanceID: 0}
     - Class: 104
-      Script: {instanceID: 0}
-    - Class: 108
       Script: {instanceID: 0}
     - Class: 114
       Script: {instanceID: 9394}
@@ -129,6 +127,20 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 9314}
     - Class: 114
+      Script: {instanceID: 9394}
+    - Class: 114
+      Script: {instanceID: 9396}
+    - Class: 114
+      Script: {instanceID: 9402}
+    - Class: 114
+      Script: {instanceID: 9408}
+    - Class: 114
+      Script: {instanceID: 9416}
+    - Class: 114
+      Script: {instanceID: 9452}
+    - Class: 114
+      Script: {instanceID: 9454}
+    - Class: 114
       Script: {instanceID: 9470}
     - Class: 114
       Script: {instanceID: 9774}
@@ -156,7 +168,11 @@ ScriptsOnlyBuild:
       Script: {instanceID: 10852}
     - Class: 114
       Script: {instanceID: 10870}
+    - Class: 114
+      Script: {instanceID: 45872}
     - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
       Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
@@ -167,6 +183,14 @@ ScriptsOnlyBuild:
     - Class: 212
       Script: {instanceID: 0}
     - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 225
       Script: {instanceID: 0}
     - Class: 19719996
       Script: {instanceID: 0}
@@ -193,10 +217,6 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 104
       Script: {instanceID: 0}
-    - Class: 108
-      Script: {instanceID: 0}
-    - Class: 114
-      Script: {instanceID: 9310}
     - Class: 114
       Script: {instanceID: 9394}
     - Class: 114
@@ -211,6 +231,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 9452}
     - Class: 114
       Script: {instanceID: 9454}
+    - Class: 114
+      Script: {instanceID: 9980}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -268,12 +290,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.TextMeshPro.dll
     namespaceName: TMPro
     className: TMP_ScrollbarEventHandler
-  - hash:
-      serializedVersion: 2
-      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: YouWinScene
   - hash:
       serializedVersion: 2
       Hash: 049c6c1d489a8d6439fa68217ef864d5
@@ -1168,6 +1184,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline.dll
     namespaceName: UnityEngine.Timeline
     className: PlayableTrack
+  - hash:
+      serializedVersion: 2
+      Hash: 71bb6a6b6c8f052f948db64c7dd3ca4f
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: QuitGame
   platform: 19
   scenePathNames:
   - Assets/TankConstructor/Main.unity
